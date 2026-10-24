@@ -1,0 +1,38 @@
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables & Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Local Databases containing User Records
+auth/*.db
+*.sqlite3
+*.db-journal
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Configs
+.vscode/
+.idea/
+*.swp
+
+# Large Raw & Processed CSVs (Parquet is tracked at 1.7MB)
+data/raw/*.zip
+data/raw/ipl_csv2/
+data/processed/deliveries_cleaned.csv

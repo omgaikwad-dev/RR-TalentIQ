@@ -1,0 +1,11 @@
+{
+  "dataset_name": "Cricsheet IPL Ball-by-Ball and Match Data (CSV2 Format)",
+  "source_url": "https://cricsheet.org/downloads/ipl_csv2.zip",
+  "license": "Creative Commons Attribution-ShareAlike (CC BY-SA 4.0)",
+  "download_timestamp": "2026-10-24T20:44:33.496788",
+  "server_last_modified": "Wed, 07 Oct 2026 17:05:19 GMT",
+  "archive_size_bytes": 6834880,
+  "total_extracted_files": 2489,
+  "total_match_csvs": 2487,
+  "readme_notes": "All Indian Premier League match data in CSV format\n==================================================\n\nThe background\n--------------\n\nAs an experiment, after being asked by a user of the site, I started\nconverting the YAML data provided on the site into a CSV format. That\ninitial version was heavily influenced by the format used by the baseball\nproject Retrosheet. I wasn't sure of the usefulness of my CSV format, but\nnothing better was suggested so I persisted with it. Later Ashwin Raman\n(https:"
+}

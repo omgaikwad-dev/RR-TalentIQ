@@ -1,0 +1,176 @@
+/* IPL Analytics Pro - Modern Sports Analytics Design System */
+
+:root {
+  --bg-primary: #0b132b;
+  --bg-secondary: #1c2541;
+  --bg-card: rgba(28, 37, 65, 0.7);
+  --accent-gold: #ffb703;
+  --accent-cyan: #48cae4;
+  --accent-blue: #0077b6;
+  --accent-orange: #fb8500;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Container & Header styling */
+.main-header {
+  background: linear-gradient(135deg, #1c2541 0%, #0b132b 100%);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-header h1 {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.main-header .badge {
+  background: linear-gradient(90deg, #ffb703, #fb8500);
+  color: #0b132b;
+  font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* KPI Stat Cards */
+.kpi-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background: linear-gradient(145deg, rgba(28, 37, 65, 0.85), rgba(11, 19, 43, 0.95));
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 183, 3, 0.4);
+}
+
+.kpi-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
+}
+
+.kpi-title {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 0.4rem;
+}
+
+.kpi-value {
+  color: #ffffff;
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+}
+
+.kpi-subtitle {
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Section Cards */
+.content-box {
+  background: rgba(28, 37, 65, 0.6);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.8rem;
+  backdrop-filter: blur(6px);
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 0.6rem;
+}
+
+/* Filter panel */
+.filter-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Auth card */
+.auth-container {
+  max-width: 480px;
+  margin: 3rem auto;
+  background: linear-gradient(160deg, #1c2541 0%, #0b132b 100%);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+}
+
+.auth-subtitle {
+  color: var(--accent-gold);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.demo-credentials-box {
+  background: rgba(255, 183, 3, 0.08);
+  border: 1px dashed var(--accent-gold);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
