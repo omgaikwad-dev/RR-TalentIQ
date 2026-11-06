@@ -20,6 +20,7 @@ load_custom_css()
 
 from auth.authentication import require_auth
 from components.sidebar import render_sidebar
+from components.scouting_components import render_rr_brand_header
 from analytics.domestic_data_loader import DomesticDataLoader
 from scouting.player_ranker import PlayerRanker
 from scouting.recommendations import RecommendationEngine
@@ -37,19 +38,11 @@ scored_df = ranker.rank_players(raw_df)
 rec_engine = RecommendationEngine(ranker)
 top_10 = rec_engine.generate_top_10_recommendations(scored_df)
 
-st.markdown("""
-<div class="main-header">
-    <div>
-        <h1>Strategy Reports & Deliverables Export</h1>
-        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-            One-click generation of PDF Strategy Dossiers and 16-Slide PowerPoint presentation decks
-        </div>
-    </div>
-    <div>
-        <span class="rr-badge">SUPERR SELECTOR S2 DELIVERABLES</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+render_rr_brand_header(
+    page_title="Strategy Reports & Deliverables Export",
+    subtitle="One-click generation of PDF Strategy Dossiers and 16-Slide PowerPoint presentation decks",
+    badge_text="SUPERR SELECTOR S2 DELIVERABLES"
+)
 
 # Top Export Actions Cards
 col_pdf, col_pptx, col_data = st.columns(3)

@@ -21,7 +21,7 @@ load_custom_css()
 
 from auth.authentication import require_auth
 from components.sidebar import render_sidebar
-from components.scouting_components import style_scouting_fig, plot_pca_cluster_landscape
+from components.scouting_components import render_rr_brand_header, style_scouting_fig, plot_pca_cluster_landscape
 from analytics.domestic_data_loader import DomesticDataLoader
 from scouting.player_ranker import PlayerRanker
 from ml.clustering import PlayerClusteringEngine
@@ -44,20 +44,11 @@ clustered_df, cluster_meta = cluster_engine.fit_predict_archetypes(scored_df)
 pca_engine = PlayerPCAModel(n_components=2)
 projected_df, pca_meta = pca_engine.fit_transform_projection(clustered_df)
 
-# Header
-st.markdown("""
-<div class="main-header">
-    <div>
-        <h1>Machine Learning Intelligence & Archetypes</h1>
-        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-            Unsupervised K-Means clustering, PCA dimensionality reduction, and z-score feature explainability
-        </div>
-    </div>
-    <div>
-        <span class="rr-badge">SCIKIT-LEARN ML ENGINE</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+render_rr_brand_header(
+    page_title="Machine Learning Intelligence & Archetypes",
+    subtitle="Unsupervised K-Means clustering, PCA dimensionality reduction, and z-score feature explainability",
+    badge_text="SCIKIT-LEARN ML ENGINE"
+)
 
 # Top ML Quality Metrics Bar
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)

@@ -21,7 +21,7 @@ load_custom_css()
 
 from auth.authentication import require_auth
 from components.sidebar import render_sidebar
-from components.scouting_components import style_scouting_fig
+from components.scouting_components import render_rr_brand_header, style_scouting_fig
 from analytics.domestic_data_loader import DomesticDataLoader
 from analytics.allrounder_scouting import DualDisciplineScoutingEngine
 from scouting.player_ranker import PlayerRanker
@@ -38,57 +38,42 @@ dual_engine = DualDisciplineScoutingEngine()
 ar_df = dual_engine.evaluate_allrounders(scored_df)
 wk_df = dual_engine.evaluate_wicketkeepers(scored_df)
 
-# Header
-st.markdown("""
-<div class="main-header">
-    <div>
-        <h1>All-Rounders & Wicketkeeper Evaluation</h1>
-        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-            Harmonic dual-discipline gating, balance ratios, and glovework indexing for specialized multi-skilled roles
-        </div>
-    </div>
-    <div>
-        <span class="rr-badge">DUAL-DISCIPLINE INTELLIGENCE</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+render_rr_brand_header(
+    page_title="All-Rounders & Wicketkeepers",
+    subtitle="Harmonic dual-discipline gating, balance ratios, and glovework indexing for specialized multi-skilled roles",
+    badge_text="DUAL DISCIPLINE SPECIALISTS"
+)
 
-tab_ar, tab_wk = st.tabs(["⚖️ All-Rounder Evaluation", "🧤 Wicketkeeper-Batter Evaluation"])
+tab_ar, tab_wk = st.tabs(["⚡ All-Rounder Balance & Impact", "🧤 Wicketkeeper-Batter Evaluation"])
 
 with tab_ar:
     st.markdown('<div class="content-box">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">📊 Batting Impact vs Bowling Impact (All-Rounder Balance Frontier)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">📊 Two-Way Contribution Matrix (Batting vs Bowling Index)</div>', unsafe_allow_html=True)
     
-    # Filter to players with at least some batting and bowling activity
-    ar_pool = ar_df[(ar_df["balls_faced"] >= 30) | (ar_df["overs"] >= 5.0)].copy()
-    
-    fig_ar = px.scatter(
-        ar_pool,
+    fig_ar_matrix = px.scatter(
+        ar_df,
         x="batting_impact_index",
         y="bowling_impact_index",
         size="allrounder_composite_score",
         color="allrounder_archetype",
         hover_name="player_name",
-        hover_data={"age": True, "strike_rate": ":.1f", "economy": ":.2f", "wickets": True, "runs": True, "discipline_balance_ratio": ":.2f"},
-        labels={
-            "batting_impact_index": "Batting Impact Index (BII)",
-            "bowling_impact_index": "Bowling Impact Index (BII)",
-            "allrounder_archetype": "Archetype"
-        },
-        color_discrete_sequence=["#ff2a85", "#00b4d8", "#2ec4b6", "#ffb703"]
+        hover_data={"age": True, "strike_rate": ":.1f", "economy": ":.2f", "wickets": True, "runs": True},
+        color_discrete_sequence=["#ea1a85", "#00e5ff", "#ffd166", "#00e676", "#ff5252"],
+        labels={"batting_impact_index": "Batting Impact Index (0-100)", "bowling_impact_index": "Bowling Impact Index (0-100)"}
     )
-    # 45-degree parity line
-    fig_ar.add_shape(type="line", x0=0, y0=0, x1=90, y1=90, line=dict(color="rgba(255,255,255,0.2)", dash="dash"))
-    fig_ar = style_scouting_fig(fig_ar)
-    fig_ar.update_layout(height=420)
-    st.plotly_chart(fig_ar, use_container_width=True)
+    # 50-50 Crosshair
+    fig_ar_matrix.add_vline(x=50.0, line_dash="dash", line_color="rgba(234, 26, 133, 0.4)")
+    fig_ar_matrix.add_hline(y=50.0, line_dash="dash", line_color="rgba(0, 229, 255, 0.4)")
+    fig_ar_matrix = style_scouting_fig(fig_ar_matrix)
+    fig_ar_matrix.update_layout(height=450)
+    st.plotly_chart(fig_ar_matrix, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Leaderboard of All-Rounders
+    # Leaderboard Table
     st.markdown('<div class="content-box">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">🏆 All-Rounder Composite Score Leaderboard (Harmonic Gating)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">👑 Top All-Rounder Composite Score (ARCS) Leaderboard</div>', unsafe_allow_html=True)
     
-    top_ar = ar_pool.sort_values(by="allrounder_composite_score", ascending=False).reset_index(drop=True)
+    top_ar = ar_df.sort_values(by="allrounder_composite_score", ascending=False).reset_index(drop=True)
     top_ar.index = top_ar.index + 1
     
     ar_cols = [
@@ -102,22 +87,15 @@ with tab_ar:
 
 with tab_wk:
     st.markdown('<div class="content-box">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">🧤 Wicketkeeper-Batter Evaluation Matrix</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">🧤 Wicketkeeper Composite Score (WCS) Leaderboard</div>', unsafe_allow_html=True)
     
-    # Filter to designated keepers or those with catches/stumpings
-    wk_candidates = wk_df[
-        (wk_df["playing_role"] == "Wicketkeeper-Batter") | 
-        (wk_df["stumpings"] >= 1) | 
-        (wk_df["catches"] >= 10)
-    ].sort_values(by="wicketkeeper_composite_score", ascending=False).reset_index(drop=True)
-    wk_candidates.index = wk_candidates.index + 1
-
+    top_wk = wk_df.sort_values(by="wicketkeeper_composite_score", ascending=False).reset_index(drop=True)
+    top_wk.index = top_wk.index + 1
+    
     wk_cols = [
-        "player_name", "age", "wicketkeeper_composite_score",
-        "keeping_impact_index", "batting_impact_index",
-        "strike_rate", "batting_average", "runs",
-        "catches", "stumpings", "total_dismissals", "dismissals_per_match", "stumping_ratio"
+        "player_name", "playing_role", "age", "wicketkeeper_composite_score",
+        "batting_impact_index", "runs", "strike_rate", "batting_average",
+        "catches", "stumpings", "total_dismissals"
     ]
-    st.dataframe(wk_candidates[wk_cols], use_container_width=True)
+    st.dataframe(top_wk[wk_cols], use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
-

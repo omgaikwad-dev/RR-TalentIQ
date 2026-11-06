@@ -96,3 +96,38 @@ class RRSquadAnalyzer:
         }
         return departments
 
+    @classmethod
+    def get_squad_summary(cls) -> Dict[str, Any]:
+        """Returns aggregate squad metrics for Rajasthan Royals."""
+        df = cls.get_core_squad()
+        return {
+            "total_players": len(df),
+            "overseas_count": len(df[df["nationality"] == "Overseas"]),
+            "indian_count": len(df[df["nationality"] == "Indian"]),
+            "batters_count": len(df[df["role"].str.contains("Batter")]),
+            "bowlers_count": len(df[df["role"].str.contains("Bowler")]),
+            "allrounders_count": len(df[df["role"].str.contains("All-Rounder")])
+        }
+
+    @classmethod
+    def identify_roster_gaps(cls) -> List[Dict[str, str]]:
+        """Identifies top structural priority gaps to be solved at the IPL 2027 auction."""
+        return [
+            {
+                "role": "Dual-Discipline Pace/Spin All-Rounder",
+                "priority": "CRITICAL",
+                "target_profile": "Power-hitting batter at No. 7-8 capable of delivering 3+ high-economy overs"
+            },
+            {
+                "role": "Young Indian Outswing Pace Specialist",
+                "priority": "HIGH",
+                "target_profile": "Powerplay swing bowler (138+ kmph) with low boundary concession"
+            },
+            {
+                "role": "Mystery / Wrist Spinner Successor",
+                "priority": "HIGH",
+                "target_profile": "Aggressive turn specialist for Sawai Mansingh Stadium pitch conditions"
+            }
+        ]
+
+

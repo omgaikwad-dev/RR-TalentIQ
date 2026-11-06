@@ -21,7 +21,7 @@ load_custom_css()
 
 from auth.authentication import require_auth
 from components.sidebar import render_sidebar
-from components.scouting_components import style_scouting_fig
+from components.scouting_components import render_rr_brand_header, style_scouting_fig
 from analytics.domestic_data_loader import DomesticDataLoader
 from scouting.player_ranker import PlayerRanker
 
@@ -31,24 +31,16 @@ render_sidebar()
 loader = DomesticDataLoader()
 raw_df = loader.load_unified_scouting_data(include_synthetic=False)
 
-st.markdown("""
-<div class="main-header">
-    <div>
-        <h1>Domestic Talent Rankings & Sensitivity Engine</h1>
-        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-            Transparent multi-criteria scoring leaderboard with live weight tuning and ranking stability testing
-        </div>
-    </div>
-    <div>
-        <span class="rr-badge">MCDA DECISION ENGINE</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+render_rr_brand_header(
+    page_title="Talent Rankings & Sensitivity Engine",
+    subtitle="Transparent multi-criteria scoring leaderboard with live weight tuning and ranking stability testing",
+    badge_text="MCDA DECISION ENGINE"
+)
 
 tab_leaderboard, tab_sensitivity = st.tabs(["🏆 Interactive Leaderboard", "📈 Sensitivity Analysis"])
 
 with tab_leaderboard:
-    st.markdown('<div class="content-box">', unsafe_allow_html=True)
+    st.markdown('<div class="rr-filter-panel">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">🎛️ Multi-Criteria Scoring Weight Calibration</div>', unsafe_allow_html=True)
     
     col_w1, col_w2, col_w3, col_w4 = st.columns(4)
@@ -74,7 +66,7 @@ with tab_leaderboard:
         roles_opt = ["All Roles"] + sorted(raw_df["playing_role"].unique().tolist())
         sel_role = st.selectbox("Filter Leaderboard by Role:", options=roles_opt)
     with c_f2:
-        max_age_cap = st.slider("Maximum Age Limit:", min_value=19.0, max_value=35.0, value=26.0, step=0.5)
+        max_age_cap = st.slider("Maximum Age Limit:", min_value=18.0, max_value=35.0, value=25.0, step=0.5)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -103,9 +95,9 @@ with tab_sensitivity:
     st.markdown("""
     <div style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6;">
         Tests rank movement across three distinct franchise strategy paradigms:
-        <br>&bull; <b>Balanced (Recommended):</b> 45% Performance, 25% Potential, 15% Consistency, 15% Sample Conf
-        <br>&bull; <b>High Potential (Youth Focus):</b> 30% Performance, 45% Potential, 15% Consistency, 10% Sample Conf
-        <br>&bull; <b>Win-Now (Immediate Impact):</b> 60% Performance, 10% Potential, 20% Consistency, 10% Sample Conf
+        <br>&bull; <b style="color: #ffd166;">Balanced (Recommended):</b> 45% Performance, 25% Potential, 15% Consistency, 15% Sample Conf
+        <br>&bull; <b style="color: #ff60b0;">High Potential (Youth Focus):</b> 30% Performance, 45% Potential, 15% Consistency, 10% Sample Conf
+        <br>&bull; <b style="color: #00e5ff;">Win-Now (Immediate Impact):</b> 60% Performance, 10% Potential, 20% Consistency, 10% Sample Conf
     </div>
     """, unsafe_allow_html=True)
 
@@ -125,10 +117,9 @@ with tab_sensitivity:
         sens_df,
         x="rank_stability",
         color="rank_stability",
-        color_discrete_map={"Ultra Stable": "#2ecc71", "Moderately Stable": "#f39c12", "Sensitive to Weights": "#e74c3c"}
+        color_discrete_map={"Ultra Stable": "#00e676", "Moderately Stable": "#ffd166", "Sensitive to Weights": "#ff5252"}
     )
     fig_stab = style_scouting_fig(fig_stab)
     fig_stab.update_layout(height=280, showlegend=False)
     st.plotly_chart(fig_stab, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
-

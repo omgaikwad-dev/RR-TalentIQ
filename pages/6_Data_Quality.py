@@ -19,6 +19,7 @@ load_custom_css()
 
 from auth.authentication import require_auth
 from components.sidebar import render_sidebar
+from components.scouting_components import render_rr_brand_header
 from analytics.data_loader import load_matches_data, load_deliveries_data
 from analytics.season_analysis import SeasonAnalytics
 
@@ -29,19 +30,11 @@ matches_df = load_matches_data()
 deliveries_df = load_deliveries_data()
 sa = SeasonAnalytics(matches_df, deliveries_df)
 
-st.markdown("""
-<div class="main-header">
-    <div>
-        <h1>Data Quality & Verification Audit</h1>
-        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-            Provenance documentation, ICC cricket rules compliance, cleaning transformations, and 19-season validation
-        </div>
-    </div>
-    <div>
-        <span class="badge">AUDIT GRADE COMPLIANCE</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+render_rr_brand_header(
+    page_title="Data Quality & Integrity Audit",
+    subtitle="Provenance documentation, ICC cricket rules compliance, cleaning transformations, and domestic validation",
+    badge_text="AUDIT GRADE COMPLIANCE"
+)
 
 # Provenance Card
 st.markdown("""

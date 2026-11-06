@@ -21,7 +21,7 @@ load_custom_css()
 
 from auth.authentication import require_auth
 from components.sidebar import render_sidebar
-from components.scouting_components import style_scouting_fig
+from components.scouting_components import render_rr_brand_header, style_scouting_fig
 from analytics.domestic_data_loader import DomesticDataLoader
 from analytics.batting_scouting import BattingScoutingEngine
 from scouting.player_ranker import PlayerRanker
@@ -37,24 +37,28 @@ scored_df = ranker.rank_players(raw_df)
 bat_engine = BattingScoutingEngine()
 bat_df = bat_engine.calculate_batting_metrics(scored_df)
 
-# Header
-st.markdown("""
-<div class="main-header">
-    <div>
-        <h1>Domestic Batting Intelligence</h1>
-        <div style="color: #94a3b8; font-size: 0.95rem; margin-top: 0.3rem;">
-            Batting Impact Index (BII), strike efficiency frontiers, boundary volume, and dot-ball control
-        </div>
-    </div>
-    <div>
-        <span class="rr-badge">POWER & ROTATION SCOUTING</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+render_rr_brand_header(
+    page_title="Domestic Batting Intelligence",
+    subtitle="Batting Impact Index (BII), strike efficiency frontiers, boundary volume, and dot-ball control",
+    badge_text="POWER & ROTATION SCOUTING"
+)
 
-# Batters Filter
-min_balls = st.slider("Minimum Balls Faced Filter:", min_value=10, max_value=300, value=60, step=10)
-qual_batters = bat_df[bat_df["balls_faced"] >= min_balls].copy()
+# Interactive Batters Filter Bar
+with st.container():
+    st.markdown('<div class="rr-filter-panel">', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns([1.5, 1, 1])
+    with c1:
+        min_balls = st.slider("Minimum Balls Faced Threshold:", min_value=10, max_value=300, value=60, step=10)
+    with c2:
+        roles_avail = ["All Batting Roles"] + sorted(bat_df["playing_role"].unique().tolist())
+        sel_role = st.selectbox("Batting Role Filter:", options=roles_avail)
+    with c3:
+        max_age_bat = st.slider("Max Age Limit:", min_value=18.0, max_value=32.0, value=25.0, step=0.5)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+qual_batters = bat_df[(bat_df["balls_faced"] >= min_balls) & (bat_df["age"] <= max_age_bat)].copy()
+if sel_role != "All Batting Roles":
+    qual_batters = qual_batters[qual_batters["playing_role"] == sel_role]
 
 # Visual Row 1: Strike Rate vs Average Scatter & Boundary Rate vs Dot Ball %
 c1, c2 = st.columns(2)
@@ -71,14 +75,13 @@ with c1:
         color="playing_role",
         hover_name="player_name",
         hover_data={"age": True, "boundary_pct_bat": ":.1f", "dot_ball_pct_bat": ":.1f", "balls_faced": True},
-        color_discrete_sequence=["#ff2a85", "#00b4d8", "#ffb703", "#2ec4b6", "#e76f51"],
+        color_discrete_sequence=["#ea1a85", "#00e5ff", "#ffd166", "#00e676", "#ff5252"],
         labels={"strike_rate": "Strike Rate (T20)", "batting_average": "Batting Average", "playing_role": "Role"}
     )
-    # Add benchmark crosshairs at 140 SR, 30 Avg
-    fig_scatter.add_vline(x=140.0, line_dash="dash", line_color="rgba(255,255,255,0.25)")
-    fig_scatter.add_hline(y=30.0, line_dash="dash", line_color="rgba(255,255,255,0.25)")
+    fig_scatter.add_vline(x=140.0, line_dash="dash", line_color="rgba(234, 26, 133, 0.4)")
+    fig_scatter.add_hline(y=30.0, line_dash="dash", line_color="rgba(0, 229, 255, 0.4)")
     fig_scatter = style_scouting_fig(fig_scatter)
-    fig_scatter.update_layout(height=400)
+    fig_scatter.update_layout(height=420)
     st.plotly_chart(fig_scatter, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -94,11 +97,11 @@ with c2:
         color="playing_role",
         hover_name="player_name",
         hover_data={"runs": True, "strike_rate": ":.1f", "fours": True, "sixes": True},
-        color_discrete_sequence=["#ff2a85", "#00b4d8", "#ffb703", "#2ec4b6", "#e76f51"],
+        color_discrete_sequence=["#ea1a85", "#00e5ff", "#ffd166", "#00e676", "#ff5252"],
         labels={"dot_ball_pct_bat": "Dot Ball % (Lower is Better)", "boundary_pct_bat": "Boundary Run % (Higher is Better)"}
     )
     fig_dots = style_scouting_fig(fig_dots)
-    fig_dots.update_layout(height=400)
+    fig_dots.update_layout(height=420)
     st.plotly_chart(fig_dots, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -116,4 +119,3 @@ b_cols = [
 ]
 st.dataframe(top_bii[b_cols], use_container_width=True)
 st.markdown('</div>', unsafe_allow_html=True)
-
