@@ -1,6 +1,6 @@
 """
-IPL Analytics Pro - Main Entry Point & Overview Dashboard
-Interactive sports intelligence platform covering 19 IPL editions (2008–2026).
+RR TalentIQ — Rajasthan Royals Talent Intelligence System
+Main Entry Point & Router for SupeRR Selector Season 2 Competition.
 """
 
 import os
@@ -9,8 +9,8 @@ import pandas as pd
 
 # Page Configuration
 st.set_page_config(
-    page_title="IPL Analytics Pro (2008–2026)",
-    page_icon="🏏",
+    page_title="RR TalentIQ — Rajasthan Royals Talent Intelligence System",
+    page_icon="👑",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -24,7 +24,7 @@ def load_custom_css():
 
 load_custom_css()
 
-# Import Project Modules
+# Import Project Modules (Preserved for backward compatibility & testing)
 from auth.authentication import (
     seed_demo_account,
     init_session_state,
@@ -53,23 +53,21 @@ from analytics.team_analysis import TeamAnalytics
 from analytics.player_analysis import PlayerAnalytics
 from analytics.match_insights import MatchInsights
 
-# Seed Database
+# Seed Database and initialize default session
 seed_demo_account()
 init_session_state()
 
-# Render Navigation Sidebar
-render_sidebar()
-
+# Preserved Historical IPL Functions
 def render_login_portal():
     """Renders the secure authentication gateway."""
     st.markdown("""
     <div style="text-align: center; margin-top: 1.5rem; margin-bottom: 2rem;">
-        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏏</div>
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">👑</div>
         <h1 style="color: #ffffff; font-size: 2.4rem; font-weight: 800; margin-bottom: 0.4rem;">
-            IPL ANALYTICS <span style="color: #ffb703;">PRO</span>
+            RR TALENT<span style="color: #ff2a85;">IQ</span>
         </h1>
         <p style="color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto;">
-            Enterprise sports analytics, historical intelligence, and deep performance metrics covering all 19 seasons of the Indian Premier League (2008–2026).
+            Rajasthan Royals Talent Intelligence System | SupeRR Selector Season 2
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -82,7 +80,6 @@ def render_login_portal():
         with tab_login:
             st.markdown("<div style='font-size: 1.2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.8rem;'>Analyst Sign In</div>", unsafe_allow_html=True)
             
-            # Quick fill session helper
             if "login_id" not in st.session_state:
                 st.session_state["login_id"] = ""
             if "login_pwd" not in st.session_state:
@@ -100,7 +97,6 @@ def render_login_portal():
                 else:
                     st.error(f"❌ {msg}")
                     
-            # Documented demo credentials box
             st.markdown(f"""
             <div class="demo-credentials-box">
                 <div style="font-weight: 700; color: #ffb703; margin-bottom: 0.3rem;">⚡ Demo Account Credentials</div>
@@ -133,23 +129,20 @@ def render_login_portal():
         
     st.markdown("""
     <div style="text-align: center; margin-top: 2.5rem; color: #64748b; font-size: 0.8rem;">
-        IPL Analytics Pro | Verified Cricsheet Data (CC BY-SA 4.0) | 1,243 Matches (2008–2026)
+        RR TalentIQ | Rajasthan Royals SupeRR Selector Season 2 | Cricsheet Verified Data
     </div>
     """, unsafe_allow_html=True)
 
 def render_overview_dashboard():
-    """Renders the main authenticated Overview intelligence dashboard."""
-    # Load verified datasets
+    """Preserved historical overview intelligence dashboard."""
     matches_df = load_matches_data()
     deliveries_df = load_deliveries_data()
     
-    # Initialize statistical engines
     sa = SeasonAnalytics(matches_df, deliveries_df)
     ta = TeamAnalytics(matches_df, deliveries_df)
     pa = PlayerAnalytics(matches_df, deliveries_df)
     mi = MatchInsights(matches_df, deliveries_df)
     
-    # Header
     st.markdown("""
     <div class="main-header">
         <div>
@@ -164,7 +157,6 @@ def render_overview_dashboard():
     </div>
     """, unsafe_allow_html=True)
     
-    # Top KPI Cards
     top_bat = pa.get_top_run_scorers(1).iloc[0]
     top_bowl = pa.get_top_wicket_takers(1).iloc[0]
     top_team_row = ta.get_all_teams_summary().iloc[0]
@@ -190,73 +182,39 @@ def render_overview_dashboard():
     }
     render_overview_kpis(kpis)
     
-    st.write("")
-    # Global Filters Bar
     filters = render_global_filters(matches_df, key_prefix="overview")
     filtered_matches = apply_match_filters(matches_df, filters)
     
     if len(filtered_matches) == 0:
-        st.warning("⚠️ No matches match the selected filter combination. Please reset or loosen filters.")
+        st.warning("⚠️ No matches match the selected filter combination.")
         return
         
-    st.markdown(f"""
-    <div style="color: #48cae4; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;">
-        📊 Showing {len(filtered_matches):,} filtered matches out of {len(matches_df):,} total
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Visualization Grid Row 1
+    trends_df = sa.get_yearly_trends()
     col1, col2 = st.columns(2)
     with col1:
-        trends_df = sa.get_yearly_trends()
         st.plotly_chart(plot_season_matches(trends_df), use_container_width=True)
     with col2:
         st.plotly_chart(plot_scoring_trends(trends_df), use_container_width=True)
-        
-    # Visualization Grid Row 2
-    col3, col4 = st.columns(2)
-    with col3:
-        team_summary = ta.get_all_teams_summary()
-        st.plotly_chart(plot_team_wins(team_summary), use_container_width=True)
-    with col4:
-        st.plotly_chart(plot_bat_first_vs_chasing(filtered_matches), use_container_width=True)
-        
-    # Visualization Grid Row 3
-    col5, col6 = st.columns(2)
-    with col5:
-        st.plotly_chart(plot_toss_vs_match_win(filtered_matches), use_container_width=True)
-    with col6:
-        st.plotly_chart(plot_toss_decisions_by_season(filtered_matches), use_container_width=True)
-        
-    # Boundaries Evolution
-    st.plotly_chart(plot_boundaries_trend(trends_df), use_container_width=True)
-    
-    # Filtered Matches Table & CSV Export
-    st.markdown('<div class="content-box">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">📋 Verified Match Record Explorer</div>', unsafe_allow_html=True)
-    
-    display_cols = [
-        "match_id", "season", "date", "venue", "team1", "team2", "toss_winner", 
-        "toss_decision", "winner", "result_type", "team1_score", "team2_score", "player_of_match"
-    ]
-    st.dataframe(
-        filtered_matches[display_cols].sort_values("date", ascending=False),
-        use_container_width=True,
-        hide_index=True
-    )
-    
-    csv_data = filtered_matches[display_cols].to_csv(index=False).encode("utf-8")
-    st.download_button(
-        label="📥 Download Filtered Match Records (CSV)",
-        data=csv_data,
-        file_name="ipl_filtered_matches.csv",
-        mime="text/csv",
-        use_container_width=False
-    )
-    st.markdown('</div>', unsafe_allow_html=True)
 
-# Main Execution Routing
-if is_authenticated():
-    render_overview_dashboard()
-else:
-    render_login_portal()
+
+# ==============================================================================
+# RR TALENTIQ — STREAMLIT MULTIPAGE NAVIGATION ROUTER
+# Renders only the 11 SupeRR Selector competition tabs in clean sidebar
+# ==============================================================================
+competition_pages = [
+    st.Page("pages/8_Scouting_Overview.py", title="Scouting Overview", icon="👑", default=True),
+    st.Page("pages/9_Player_Explorer.py", title="Player Explorer", icon="🔍"),
+    st.Page("pages/10_Batting_Scouting.py", title="Batting Scouting", icon="🏏"),
+    st.Page("pages/11_Bowling_Scouting.py", title="Bowling Scouting", icon="🎯"),
+    st.Page("pages/12_All_Rounder_Analysis.py", title="All Rounder Analysis", icon="⚡"),
+    st.Page("pages/13_Player_Comparison.py", title="Player Comparison", icon="⚖️"),
+    st.Page("pages/14_Talent_Rankings.py", title="Talent Rankings", icon="🏆"),
+    st.Page("pages/15_ML_Intelligence.py", title="ML Intelligence", icon="🤖"),
+    st.Page("pages/16_Auction_Strategy.py", title="Auction Strategy", icon="💰"),
+    st.Page("pages/17_Scouting_Reports.py", title="Scouting Reports", icon="📄"),
+    st.Page("pages/6_Data_Quality.py", title="Data Quality", icon="🛡️"),
+]
+
+nav = st.navigation(competition_pages, position="sidebar", expanded=True)
+nav.run()
+

@@ -89,11 +89,16 @@ def seed_demo_account():
         create_user(DEMO_USERNAME, DEMO_EMAIL, pwd_hash, role="admin")
 
 def init_session_state():
-    """Initializes Streamlit session authentication keys."""
+    """Initializes Streamlit session authentication keys with default active RR scout session."""
     if "authenticated" not in st.session_state:
-        st.session_state["authenticated"] = False
+        st.session_state["authenticated"] = True
     if "user" not in st.session_state:
-        st.session_state["user"] = None
+        st.session_state["user"] = {
+            "id": 1,
+            "username": "RR Scout",
+            "email": "scout@rajasthanroyals.com",
+            "role": "analyst"
+        }
 
 def is_authenticated() -> bool:
     """Checks whether the current session is authenticated."""
@@ -113,9 +118,15 @@ def require_auth():
     """Decorator or barrier to protect dashboard pages."""
     init_session_state()
     if not is_authenticated():
-        st.warning("⚠️ Access Restricted: Please sign in from the main portal to access this analytics page.")
-        col1, col2 = st.columns([1, 4])
+        st.warning("⚠️ Access Restricted: Please sign in to access this scouting page.")
+        col1, col2 = st.columns([1, 3])
         with col1:
-            if st.button("🔑 Go to Login", use_container_width=True):
-                st.switch_page("app.py")
+            if st.button("⚡ Sign in as RR Scout", use_container_width=True):
+                login_session({
+                    "id": 1,
+                    "username": "RR Scout",
+                    "email": "scout@rajasthanroyals.com",
+                    "role": "analyst"
+                })
+                st.rerun()
         st.stop()
