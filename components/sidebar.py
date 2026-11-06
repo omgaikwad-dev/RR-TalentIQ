@@ -12,11 +12,13 @@ def render_sidebar():
         # Platform Logo / Title
         st.markdown("""
         <div style="text-align: center; padding: 0.5rem 0 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1.2rem;">
-            <div style="font-size: 2.2rem; margin-bottom: 0.2rem;">🏏</div>
-            <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">IPL ANALYTICS <span style="color: #ffb703;">PRO</span></div>
-            <div style="font-size: 0.75rem; color: #48cae4; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">2008–2026 Edition</div>
+            <div style="font-size: 2.2rem; margin-bottom: 0.2rem;">👑</div>
+            <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">RR <span style="color: #ff2a85;">TALENT</span><span style="color: #00b4d8;">IQ</span></div>
+            <div style="font-size: 0.72rem; color: #ff75a0; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">SupeRR Selector Season 2</div>
+            <div style="font-size: 0.68rem; color: #94a3b8; margin-top: 0.2rem;">IPL 2027 Auction Intelligence</div>
         </div>
         """, unsafe_allow_html=True)
+
         
         # User Authentication Status
         if is_authenticated():

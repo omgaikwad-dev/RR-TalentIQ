@@ -12,7 +12,63 @@
   --text-muted: #94a3b8;
   --border-glass: rgba(255, 255, 255, 0.1);
   --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --rr-pink: #ff2a85;
+  --rr-pink-light: #ff75a0;
+  --rr-royal-blue: #004ba0;
+  --rr-blue-glow: rgba(0, 75, 160, 0.4);
 }
+
+/* RR TalentIQ - Scouting Badges & Elements */
+.rr-badge {
+  background: linear-gradient(90deg, #ff2a85, #004ba0);
+  color: #ffffff;
+  font-weight: 800;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 10px rgba(255, 42, 133, 0.3);
+}
+
+.scouting-card {
+  background: linear-gradient(145deg, rgba(20, 30, 55, 0.9), rgba(10, 18, 38, 0.95));
+  border: 1px solid rgba(255, 42, 133, 0.25);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.scouting-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 42, 133, 0.6);
+}
+
+.priority-tag {
+  background: rgba(255, 42, 133, 0.15);
+  border: 1px solid #ff2a85;
+  color: #ff75a0;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.quadrant-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  display: inline-block;
+}
+.quad-steal { background: rgba(39, 174, 96, 0.2); color: #2ecc71; border: 1px solid #27ae60; }
+.quad-battle { background: rgba(230, 126, 34, 0.2); color: #f39c12; border: 1px solid #e67e22; }
+.quad-depth { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #2980b9; }
+.quad-avoid { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #c0392b; }
+
 
 /* Container & Header styling */
 .main-header {

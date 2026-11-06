@@ -1,63 +1,102 @@
-# 🏏 IPL Analytics Pro (2008–2026)
+# 🏏 IPL Analytics Pro & 👑 RR TalentIQ (2008–2027)
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Framework-Streamlit%201.63-FF4B4B.svg)](https://streamlit.io/)
-[![Plotly](https://img.shields.io/badge/Visualization-Plotly%20Express-00C9FF.svg)](https://plotly.com/)
-[![Tests](https://img.shields.io/badge/Tests-10%2F10%20Passing-brightgreen.svg)](https://pytest.org/)
+[![Streamlit](https://img.shields.io/badge/Framework-Streamlit%201.65-FF4B4B.svg)](https://streamlit.io/)
+[![Plotly](https://img.shields.io/badge/Visualization-Plotly%207.1-00C9FF.svg)](https://plotly.com/)
+[![Tests](https://img.shields.io/badge/Tests-41%2F41%20Passing-brightgreen.svg)](https://pytest.org/)
+[![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn%201.9-F7931E.svg)](https://scikit-learn.org/)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/Data%20License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-**IPL Analytics Pro** is an enterprise-grade cricket analytics and interactive intelligence platform delivering audit-grade historical insights from all 19 editions of the Indian Premier League (**2008 through 2026**).
+**RR TalentIQ** is an advanced domestic cricket talent scouting and IPL 2027 auction intelligence platform integrated directly into **IPL Analytics Pro (2008–2026)**.
 
-Built on official ball-by-ball records from **[Cricsheet](https://cricsheet.org/)**, the system strictly forbids fabricated data, enforces ICC cricket scoring laws (including extra attribution under Law 21), isolates non-regulation play (Super Overs), and provides an interactive Plotly-powered Streamlit web application protected by secure `bcrypt` authentication.
-
----
-
-## 📌 Key Highlights
-
-- **19 Complete Seasons (2008–2026):** 1,243 verified matches, 295,732 ball-by-ball deliveries, 398,965 runs, and 15,287 wickets.
-- **Verified 2026 Coverage:** All 74 matches of the 2026 season (March 28 to May 31, 2026) verified and integrated.
-- **ICC Law 21 Compliance:** Bowler runs conceded strictly exclude byes and leg-byes; bowler wickets exclude run-outs.
-- **Interactive Plotly Visualizations:** 20+ responsive charts with customized dark sports aesthetics, hover tooltips, and zero clashing colors.
-- **Modular Statistical Engines:** Independent, reusable Python classes for Season, Team, Player, Venue, and Match analytics.
-- **Production-Ready Authentication:** SQLite user management, salt-hashed passwords via `bcrypt` (12 rounds), input validation, and route guards.
-- **Automated QA Pipeline:** 10 automated unit and regression tests passing with 100% success.
+The platform was engineered to power an individual submission for the **Rajasthan Royals SupeRR Selector Season 2** competition. Its Round 1 objective is to identify, evaluate, and justify the **Top 10 youngest uncapped domestic cricket talents** that Rajasthan Royals should back at the upcoming **IPL 2027 Auction**.
 
 ---
 
-## 🛠️ Technology Stack
+## 📌 Platform Dual Architecture
 
-| Domain | Technology | Purpose |
+| Capability | Module Namespace | Primary Focus |
 |:---|:---|:---|
-| **Language** | Python 3.10 – 3.12 | Core data processing and application logic |
-| **Data Engine** | Pandas 3.0+ & NumPy 2.5+ | Relational joins, extra calculations, aggregations |
-| **High-Performance Storage** | Apache Parquet (PyArrow) | Sub-second ball-by-ball queries across 300,000+ records |
-| **Visualizations** | Plotly Express & Plotly Graph Objects | Interactive, responsive dark-themed charts |
-| **Supplementary Analytics** | Matplotlib & Seaborn | Static exploratory reports and notebook generation |
-| **Application UI** | Streamlit 1.63+ (Multi-Page App) | Reactive web dashboard with custom CSS glassmorphism |
-| **Security & Auth** | SQLite 3 & `bcrypt` | Salt-hashed credentials and session management |
-| **Testing** | `pytest` | Unit, relational, and regression test suites |
+| **IPL Analytics Pro** | `analytics/`, `pages/1-7` | 19 seasons of historical IPL match records (1,243 matches, 295,732 deliveries) |
+| **RR TalentIQ Scouting** | `scouting/`, `pages/8-14` | Uncapped domestic talent scouting, age reference auditing, potential curve modeling, MCDA ranking |
+| **Machine Learning Intelligence** | `ml/`, `pages/15` | Unsupervised K-Means clustering, PCA latent projections, z-score feature attribution |
+| **RR Auction Strategy** | `auction/`, `pages/16` | RR squad depth audit, priority gaps, estimated market valuation, 4-quadrant budget optimization |
+| **Strategy Reporting Engine** | `reports/`, `pages/17` | Publication-grade PDF Strategy Dossier (`reportlab`) & automated 16-Slide PPTX Deck (`python-pptx`) |
 
 ---
 
-## 📁 Repository Structure
+## 🛠️ Complete Repository Architecture
 
 ```text
-ipl-analytics-pro/
-├── app.py                      # Main entry portal & Overview Dashboard
-├── pages/
-│   ├── 1_Season_Analysis.py    # Longitudinal trends & season points tables
-│   ├── 2_Team_Analysis.py      # Franchise rankings & Head-to-Head simulator
-│   ├── 3_Player_Analysis.py    # Batting & bowling leaders, batter vs bowler, Kohli deep dive
-│   ├── 4_Venue_Analysis.py     # Stadium usage, par scores & chasing bias
-│   ├── 5_Match_Insights.py     # Record totals, closest finishes, highest individual scores
-│   ├── 6_Data_Quality.py       # Data provenance, validation checklist, coverage table
-│   └── 7_About.py              # Architecture, tech stack & project philosophy
-├── analytics/                  # Reusable statistical engines
-│   ├── __init__.py
-│   ├── data_loader.py          # Cached data loading utility
-│   ├── season_analysis.py      # SeasonAnalytics class
-│   ├── team_analysis.py        # TeamAnalytics class
-│   ├── player_analysis.py      # PlayerAnalytics class
+ipl-analytics-pro/ (branch: feature/rr-talentiq)
+├── app.py                          # Unified portal & historical IPL overview
+├── pages/                          # Multipage application (17 verified pages)
+│   # --- Historical IPL Intelligence ---
+│   ├── 1_Season_Analysis.py        # Longitudinal season standings & scoring rates
+│   ├── 2_Team_Analysis.py          # Franchise rankings & head-to-head matrix
+│   ├── 3_Player_Analysis.py        # Career batting/bowling records & Kohli analysis
+│   ├── 4_Venue_Analysis.py         # Ground par scores & toss chasing bias
+│   ├── 5_Match_Insights.py         # Record team totals & closest finishes
+│   ├── 6_Data_Quality.py           # ICC Law 21 compliance & relational audit
+│   ├── 7_About.py                  # Architecture, tech stack & project philosophy
+│   # --- RR TalentIQ Domestic Scouting & Auction ---
+│   ├── 8_Scouting_Overview.py      # Mission control, KPI cards, role/age distributions
+│   ├── 9_Player_Explorer.py        # 360° talent dossiers, 7-axis radar, CSV export
+│   ├── 10_Batting_Scouting.py      # Batting Impact Index (BII), strike efficiency frontier
+│   ├── 11_Bowling_Scouting.py      # Bowling Impact Index (BII), economy containment
+│   ├── 12_All_Rounder_Analysis.py  # Harmonic dual-discipline gating & wicketkeeper index
+│   ├── 13_Player_Comparison.py     # Head-to-head comparison for up to 4 candidates
+│   ├── 14_Talent_Rankings.py       # Live MCDA weight calibration & sensitivity analysis
+│   ├── 15_ML_Intelligence.py       # K-Means archetypes, 2D PCA latent map, explainability
+│   ├── 16_Auction_Strategy.py      # 4-Quadrant Value vs Cost matrix & RR squad gap audit
+│   └── 17_Scouting_Reports.py      # One-click downloadable PDF dossier & PPTX slide deck
+├── analytics/                      # Analytical and mathematical engines
+│   ├── domestic_data_loader.py     # Adaptive CSV/Excel ingestion, synonym mapper, 10-pt QA audit
+│   ├── batting_scouting.py         # Batting metrics, boundary ball %, non-linear confidence
+│   ├── bowling_scouting.py         # Bowling metrics, decimal overs, dot ball pressure
+│   ├── allrounder_scouting.py      # Independent 2-way evaluation & keeper glovework metrics
+│   ├── consistency_analysis.py     # Innings volatility, conversion rates, sample reliability
+│   └── performance_normalization.py# Percentile & Min-Max normalization to [0, 100] scale
+├── scouting/                       # Scouting decision logic
+│   ├── age_eligibility.py          # Reference date (2027-01-01) age calculator & cap audit
+│   ├── uncapped_filter.py          # Uncapped domestic pool filter & exclusions tracker
+│   ├── role_classifier.py          # Empirical role & tactical archetype inference
+│   ├── potential_score.py          # Age curve modeling & development headroom ceiling
+│   ├── player_ranker.py            # Multi-criteria decision ranker & sensitivity engine
+│   ├── player_profiles.py          # 360° dossier compiler with automated strengths/weaknesses
+│   └── recommendations.py          # Top 10 Youngest Uncapped Recommendation Engine
+├── ml/                             # Scikit-learn machine learning suite
+│   ├── preprocessing.py            # Feature engineering, median imputer, StandardScaler
+│   ├── clustering.py               # K-Means clustering with silhouette score validation
+│   ├── player_model.py             # PCA dimensionality reduction (2D coordinates)
+│   └── explainability.py           # Z-score cohort attribution (positive/negative drivers)
+├── auction/                        # Franchise auction intelligence
+│   ├── rr_squad_analysis.py        # Verified RR core squad & 7-department depth audit
+│   ├── squad_requirements.py       # 5-tier scouting priority matrix & squad fit scoring
+│   ├── player_valuation.py         # Base price, role scarcity factors, max bid ceilings
+│   └── auction_strategy.py         # Value vs Cost quadrants & ₹14.0 Cr auction cart optimizer
+├── reports/                        # Deliverables compilation
+│   ├── executive_summary.py        # Publication-grade ReportLab PDF generator
+│   └── presentation_export.py      # Automated 16-Slide python-pptx presentation deck generator
+├── tests/                          # Automated Pytest suite (41/41 passing)
+│   ├── test_analytics.py           # Historical IPL analytics unit tests
+│   ├── test_authentication.py      # bcrypt authentication & SQLite user tests
+│   ├── test_cleaning.py            # Cricsheet data cleaning rules & extra validations
+│   ├── test_domestic_data.py       # Domestic ingestion, adaptive synonyms, QA report tests
+│   ├── test_eligibility.py         # Age reference date, capped player exclusion tests
+│   ├── test_batting_metrics.py     # Batting impact index, rotation SR, sample confidence tests
+│   ├── test_bowling_metrics.py     # Bowling impact index, decimal overs, harmonic gating tests
+│   ├── test_player_ranking.py      # Leaderboard, potential curves, sensitivity tests
+│   ├── test_ml.py                  # K-Means, silhouette score, PCA, explainability tests
+│   ├── test_auction.py             # RR squad depth, valuation math, auction quadrant tests
+│   └── test_reports.py             # PDF & PPTX file generation tests
+├── data/
+│   ├── raw/                        # Cricsheet archive & RR competition drop folder
+│   ├── processed/                  # Cleaned parquet & CSV datasets
+│   └── sample/                     # Synthetic test fixtures explicitly isolated for QA
+├── assets/style.css                # Dark sports design system (Rajasthan Royals palette)
+└── requirements.txt                # Complete project dependencies
+
 │   ├── venue_analysis.py       # VenueAnalytics class
 │   └── match_insights.py       # MatchInsights class
 ├── auth/                       # Secure authentication system
@@ -129,26 +168,47 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Reproduce Data Pipeline (Optional — Processed Data Included)
+### 4. Run the Automated Test Suite (41 Tests)
 ```bash
-# 1. Download raw data from Cricsheet
-python scripts/download_data.py
-
-# 2. Clean, standardize, and process datasets
-python scripts/clean_data.py
-
-# 3. Run validation assertions
-python scripts/validate_data.py
-
-# 4. Generate EDA charts and notebooks
-python scripts/run_eda.py
+python -m pytest tests/ -v
 ```
+All 41 unit and regression tests will execute across both historical IPL and domestic scouting modules.
 
 ### 5. Launch the Streamlit Web Application
 ```bash
 streamlit run app.py
 ```
 Open your browser at `http://localhost:8501`.
+
+---
+
+## 📥 Domestic Data Ingestion & Competition Pack Guide
+
+The platform includes an adaptive ingestion pipeline ([`analytics/domestic_data_loader.py`](file:///d:/RR/ipl-analytics-pro/analytics/domestic_data_loader.py)) ready to accept the official **Rajasthan Royals SupeRR Selector competition pack**:
+
+1. Place your competition files (CSV, Excel `.xlsx`/`.xls`, Parquet, or JSON) directly into:
+   ```text
+   data/raw/rr_competition/
+   ```
+2. The system automatically scans the folder, adaptively maps columns (matching synonyms like `bf`, `balls_faced`, `ov`, `rc`, `wkts`), validates cricket mathematics (Strike Rate, Economy, Boundary %), and generates an auditable 10-point data quality report.
+3. Proprietary competition files placed in `data/raw/rr_competition/` are protected by `.gitignore` and are never exposed or committed.
+4. If no external file is supplied, the platform automatically leverages authentic benchmark records of recent domestic performers cross-checked against Cricsheet ball-by-ball deliveries. Synthetic test fixtures are strictly isolated in `data/sample/` for QA only.
+
+---
+
+## 📄 Strategy Report & Presentation Export Instructions
+
+To generate the competition deliverables:
+- **Interactive Download:** Navigate to **Page 17 (Scouting Reports)** in the Streamlit web app to download the formatted PDF dossier and 16-slide PowerPoint deck with one click.
+- **Programmatic Generation via Python CLI:**
+```bash
+# Generate PDF Strategy Report
+python -c "from reports.executive_summary import ExecutiveSummaryPDFGenerator; ExecutiveSummaryPDFGenerator.generate_pdf('reports/RR_TalentIQ_Strategy_Report.pdf'); print('PDF created successfully!')"
+
+# Generate 16-Slide PPTX Strategy Deck
+python -c "from reports.presentation_export import PresentationDeckGenerator; PresentationDeckGenerator.generate_presentation_deck('reports/RR_TalentIQ_Strategy_Deck.pptx'); print('PPTX created successfully!')"
+```
+
 
 ---
 

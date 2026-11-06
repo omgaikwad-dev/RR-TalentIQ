@@ -1,0 +1,6 @@
+player_id,name,dob,role,batting,bowling,team,tournament,season,mat,runs,bf,fours,sixes,ov,rc,wkts,catches,stumpings,uncapped,is_synthetic
+SYN_001,Test Batter One,2005-04-12,Top-order Batter,Right-hand bat,Right-arm offbreak,Sample State A,Domestic T20,2025-26,12,410,270,42,16,0,0,0,5,0,Confirmed Uncapped,True
+SYN_002,Test Bowler Two,2004-11-20,Pace Bowler,Right-hand bat,Right-arm fast,Sample State B,Domestic T20,2025-26,12,18,15,1,1,44.0,330,22,3,0,Confirmed Uncapped,True
+SYN_003,Test AllRounder Three,2003-07-09,Batting All-Rounder,Left-hand bat,Slow left-arm orthodox,Sample State C,Domestic T20,2025-26,10,280,190,26,12,32.0,240,12,6,0,Confirmed Uncapped,True
+SYN_004,Test Keeper Four,2006-01-15,Wicketkeeper-Batter,Right-hand bat,None,Sample State D,Domestic T20,2025-26,11,350,230,34,14,0,0,0,14,4,Confirmed Uncapped,True
+

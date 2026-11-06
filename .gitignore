@@ -36,3 +36,11 @@ desktop.ini
 data/raw/*.zip
 data/raw/ipl_csv2/
 data/processed/deliveries_cleaned.csv
+
+# RR SupeRR Selector & Competition Data Privacy Guards
+data/raw/rr_competition/
+data/raw/*.xlsx
+data/raw/*.xls
+data/external/*
+!data/external/.gitkeep
+

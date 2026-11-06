@@ -19,6 +19,13 @@ bcrypt>=4.1.0
 
 # Notebook & Reporting
 nbformat>=5.9.0
+reportlab>=4.0.0
+python-pptx>=1.0.0
+
+# Machine Learning & Advanced Statistics
+scikit-learn>=1.4.0
+scipy>=1.11.0
+
 
 # Testing & Quality Assurance
 pytest>=8.0.0
